@@ -10,7 +10,8 @@ import 'package:expenses/components/transaction_list.dart';
 
 import '../models/transaction.dart';
 
-//parei no modulo 6 aula 14
+//Finalizei modulo 6
+//parei no modulo 7 aula 1
 main() => runApp(ExpensesApp());
 
 class ExpensesApp extends StatelessWidget {
