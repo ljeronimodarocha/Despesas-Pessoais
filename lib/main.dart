@@ -1,15 +1,16 @@
-import 'dart:math';
 import 'dart:io';
+import 'dart:math';
 
-import 'package:expenses/components/transaction_form.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'components/transaction_form.dart';
-import 'components/transaction_list.dart';
-import 'components/chart.dart';
-import 'models/transaction.dart';
+import 'package:expenses/components/chart.dart';
+import 'package:expenses/components/transaction_form.dart';
+import 'package:expenses/components/transaction_list.dart';
 
+import '../models/transaction.dart';
+
+//parei no modulo 6 aula 14
 main() => runApp(ExpensesApp());
 
 class ExpensesApp extends StatelessWidget {
@@ -22,14 +23,14 @@ class ExpensesApp extends StatelessWidget {
         accentColor: Colors.amber,
         fontFamily: 'Quicksand',
         textTheme: ThemeData.light().textTheme.copyWith(
-              titleLarge: TextStyle(
+              titleLarge: const TextStyle(
                 fontFamily: 'OpenSans',
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               )),
         appBarTheme: AppBarTheme(
           textTheme: ThemeData.light().textTheme.copyWith(
-                titleLarge: TextStyle(
+                titleLarge: const TextStyle(
                   fontFamily: 'OpenSans',
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -53,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Transaction> get _recentTransactions {
     return _transactions.where((tr) {
       return tr.date.isAfter(DateTime.now().subtract(
-        Duration(days: 7),
+        const Duration(days: 7),
       ));
     }).toList();
   }
@@ -101,13 +102,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
     final iconList = Platform.isIOS ? CupertinoIcons.refresh : Icons.list;
     final chartList =
-        Platform.isIOS ? CupertinoIcons.refresh : Icons.show_chart;
+    Platform.isIOS ? CupertinoIcons.refresh : Icons.show_chart;
 
     final actions = <Widget>[
       if (isLandscape)
         _getIconButton(
           _showChart ? iconList : chartList,
-          () {
+              () {
             setState(() {
               _showChart = !_showChart;
             });
@@ -115,22 +116,22 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       _getIconButton(
         Platform.isIOS ? CupertinoIcons.add : Icons.add,
-        () => _openTransactionFormModal(context),
+            () => _openTransactionFormModal(context),
       ),
     ];
 
     final dynamic appBar = Platform.isIOS
         ? CupertinoNavigationBar(
-            middle: Text('Despesas Pessoais'),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: actions,
-            ),
-          )
+      middle: const Text('Despesas Pessoais'),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: actions,
+      ),
+    )
         : AppBar(
-            title: Text('Despesas Pessoais'),
-            actions: actions,
-          );
+      title: const Text('Despesas Pessoais'),
+      actions: actions,
+    );
 
     final availableHeight = mediaQuery.size.height -
         appBar.preferredSize.height -
@@ -145,7 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
             //   Row(
             //     mainAxisAlignment: MainAxisAlignment.center,
             //     children: <Widget>[
-            //       Text('Exibir Gr√°fico'),
+            //       Text('Exibir Gr·fico'),
             //       Switch.adaptive(
             //         activeColor: Theme.of(context).accentColor,
             //         value: _showChart,
@@ -174,20 +175,22 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Platform.isIOS
         ? CupertinoPageScaffold(
-            navigationBar: appBar,
-            child: bodyPage,
-          )
+      navigationBar: appBar,
+      child: bodyPage,
+    )
         : Scaffold(
-            appBar: appBar,
-            body: bodyPage,
-            floatingActionButton: Platform.isIOS
-                ? Container()
-                : FloatingActionButton(
-                    child: Icon(Icons.add),
-                    onPressed: () => _openTransactionFormModal(context),
-                  ),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-          );
+      appBar: appBar,
+      body: bodyPage,
+      floatingActionButton: Platform.isIOS
+          ? Container()
+          : FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => _openTransactionFormModal(context),
+      ),
+      floatingActionButtonLocation:
+      FloatingActionButtonLocation.centerFloat,
+    );
   }
 }
+
+
